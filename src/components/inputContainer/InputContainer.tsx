@@ -1,18 +1,17 @@
-import { postTodos, setValue } from "../../store/features/todos/todosSlice";
-import { useTypeDispatch, useTypedSelector } from "../../store/store";
+import { useState } from "react";
+import { useAddTodosMutation } from "../../store/api/apiSlice";
 import styles from "./InputContainer.module.css";
 import { Form, Input, Button, message } from "antd";
 import uuid from "react-uuid";
 
-interface Form {
-  textField?: string;
-}
+// interface Form {
+//   textField?: string;
+// }
 
 export const InputContainer = () => {
   const [messageApi, contextHolder] = message.useMessage();
-  const value = useTypedSelector((state) => state.todos.value);
-  console.log(value);
-  const dispatch = useTypeDispatch();
+  const [value, setValue] = useState("");
+  const [addTodo] = useAddTodosMutation();
 
   const successMessage = () => {
     messageApi.open({
@@ -28,15 +27,21 @@ export const InputContainer = () => {
     });
   };
 
-  const onFinish = (values: string) => {
+  const onFinish = (values: unknown) => {
     console.log("Success:", values);
-    successMessage();
+    if (!value) {
+      errorMessage();
+      return;
+    }
+
     const obj = {
       id: uuid(),
       title: value,
     };
-    console.log(obj);
-    dispatch(postTodos(obj));
+
+    addTodo(obj);
+    setValue(""); // Clear the input
+    successMessage();
   };
 
   const onFinishFailed = (errorInfo: unknown) => {
@@ -53,12 +58,13 @@ export const InputContainer = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<Form>
+        <Form.Item
           rules={[{ required: true, message: "Please enter your todo!" }]}
-          name={"textField"}
+          // name={"textField"}
         >
           <Input
-            onChange={(e) => dispatch(setValue(e.target.value))}
+            // value={value}
+            onChange={(e) => setValue(e.target.value)}
             variant="filled"
             placeholder="Add your todo"
           ></Input>

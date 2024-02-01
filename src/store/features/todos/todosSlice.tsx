@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch } from "../../store";
-// import { CreateApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
 
 export interface TodosObject {
   id: string;
@@ -10,12 +9,10 @@ export interface TodosObject {
 
 export interface TodosState {
   todos: TodosObject[];
-  value: string;
 }
 
 const initialState: TodosState = {
   todos: [],
-  value: "",
 };
 
 export const todosSlice = createSlice({
@@ -24,9 +21,6 @@ export const todosSlice = createSlice({
   reducers: {
     setTodos: (state, action: PayloadAction<TodosObject[]>) => {
       state.todos = action.payload;
-    },
-    setValue: (state, action: PayloadAction<string>) => {
-      state.value = action.payload;
     },
   },
 });
@@ -63,4 +57,4 @@ export const postTodos = (todoObj: object) => {
   };
 };
 
-export const { setTodos, setValue } = todosSlice.actions;
+export const { setTodos } = todosSlice.actions;
