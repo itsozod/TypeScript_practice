@@ -3,15 +3,17 @@ import { useAddTodosMutation } from "../../store/api/apiSlice";
 import styles from "./InputContainer.module.css";
 import { Form, Input, Button, message } from "antd";
 import uuid from "react-uuid";
+import { useForm } from "antd/es/form/Form";
 
-// interface Form {
-//   textField?: string;
-// }
+interface Form {
+  textField?: string;
+}
 
 export const InputContainer = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [value, setValue] = useState("");
   const [addTodo] = useAddTodosMutation();
+  const [form] = useForm();
 
   const successMessage = () => {
     messageApi.open({
@@ -40,8 +42,9 @@ export const InputContainer = () => {
     };
 
     addTodo(obj);
-    setValue(""); // Clear the input
+
     successMessage();
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo: unknown) => {
@@ -53,17 +56,18 @@ export const InputContainer = () => {
     <div className={styles.input_container}>
       {contextHolder}
       <Form
+        form={form}
         className={styles.form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
+        <Form.Item<Form>
           rules={[{ required: true, message: "Please enter your todo!" }]}
-          // name={"textField"}
+          name={"textField"}
         >
           <Input
-            // value={value}
+            value={value}
             onChange={(e) => setValue(e.target.value)}
             variant="filled"
             placeholder="Add your todo"
