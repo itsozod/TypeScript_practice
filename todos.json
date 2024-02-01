@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Shopping"
+    },
+    {
+      "id": "ed8d0181-9323-ff76-cc59-0baa3448db17",
+      "title": "Learning TS"
+    },
+    {
+      "id": "f60d2622-2812-75d3-3b38-6e03bdbce0ca",
+      "title": "RTK Query"
+    },
+    {
+      "id": "c38e07ee-da00-d405-b057-7415014526e1",
+      "title": "Redux"
+    },
+    {
+      "id": "7382f9ae-1f11-5474-fa0c-60cd655516f6",
+      "title": "Redux Toolkip"
+    }
+  ]
+}
