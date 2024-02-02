@@ -11,9 +11,14 @@
   gap: 10px;
   max-width: 600px;
 }
-.todo_item {
+.todo_card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
   background-color: bisque;
   padding: 10px;
   width: 100%;
   border-radius: 12px;
+  margin: 10px;
 }

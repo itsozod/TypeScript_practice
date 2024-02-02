@@ -1,10 +1,6 @@
 {
   "todos": [
     {
-      "id": 1,
-      "title": "Shopping"
-    },
-    {
       "id": "ed8d0181-9323-ff76-cc59-0baa3448db17",
       "title": "Learning TS"
     },
@@ -29,12 +25,8 @@
       "title": "tagTypes"
     },
     {
-      "id": "2883223b-94f1-38ec-51e5-2a00a17b177e",
-      "title": "jjsjss"
-    },
-    {
-      "id": "e9fd150f-2b3f-87eb-1726-9a06400e97d6",
-      "title": "aksmdksads"
+      "id": "ff444c38-c6fd-2e47-ae73-4ad6c913e037",
+      "title": "invalidDatesTags"
     }
   ]
 }
