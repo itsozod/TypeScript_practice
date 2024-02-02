@@ -30,8 +30,20 @@ export const todosApi = createApi({
       }),
       invalidatesTags: ["Todos"],
     }),
+    editTodos: builder.mutation({
+      query: (todo) => ({
+        url: `/todos/${todo.id}`,
+        method: "PUT",
+        body: todo, // Make sure to stringify the body if necessary
+      }),
+      invalidatesTags: ["Todos"],
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useAddTodosMutation, useDeleteTodosMutation } =
-  todosApi;
+export const {
+  useGetTodosQuery,
+  useAddTodosMutation,
+  useDeleteTodosMutation,
+  useEditTodosMutation,
+} = todosApi;

@@ -1,32 +1,12 @@
 {
   "todos": [
     {
-      "id": "ed8d0181-9323-ff76-cc59-0baa3448db17",
-      "title": "Learning TS"
-    },
-    {
-      "id": "f60d2622-2812-75d3-3b38-6e03bdbce0ca",
-      "title": "RTK Query"
-    },
-    {
-      "id": "c38e07ee-da00-d405-b057-7415014526e1",
-      "title": "Redux"
-    },
-    {
-      "id": "7382f9ae-1f11-5474-fa0c-60cd655516f6",
-      "title": "Redux Toolkit"
-    },
-    {
-      "id": "c9a0b1ad-6c45-9d81-554d-dc6583c0ae87",
-      "title": "apiProvider"
-    },
-    {
-      "id": "6b9a1d41-5095-433b-7f55-b7fec026da67",
-      "title": "tagTypes"
-    },
-    {
       "id": "ff444c38-c6fd-2e47-ae73-4ad6c913e037",
       "title": "invalidDatesTags"
+    },
+    {
+      "id": "fafa6be0-3931-e0ba-f8fb-3c6221950a1f",
+      "title": "providesTags"
     }
   ]
 }
