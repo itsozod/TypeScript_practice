@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAddTodosMutation } from "../../store/api/apiSlice";
 import styles from "./InputContainer.module.css";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Dropdown, MenuProps } from "antd";
 import uuid from "react-uuid";
 import { useForm } from "antd/es/form/Form";
 
@@ -11,6 +11,26 @@ interface Form {
 
 export const InputContainer = () => {
   // const editedTodo = useTypedSelector((state) => state.todos.edit);
+  const [bgColor, setBgColor] = useState<string>("blue");
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Red",
+    },
+    {
+      key: "2",
+      label: "Blue",
+    },
+    {
+      key: "3",
+      label: "Green",
+    },
+    {
+      key: "4",
+      label: "Violet",
+    },
+  ];
+
   const [messageApi, contextHolder] = message.useMessage();
   const [value, setValue] = useState("");
   const [addTodo] = useAddTodosMutation();
@@ -40,6 +60,7 @@ export const InputContainer = () => {
     const obj = {
       id: uuid(),
       title: value,
+      done: false,
     };
 
     addTodo(obj);
@@ -75,7 +96,11 @@ export const InputContainer = () => {
           ></Input>
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            style={{ backgroundColor: bgColor }}
+            type="primary"
+            htmlType="submit"
+          >
             Submit
           </Button>
         </Form.Item>

@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export interface Todo {
   id: string;
   title: string;
+  done: boolean;
 }
 
 export const todosApi = createApi({
@@ -34,7 +35,15 @@ export const todosApi = createApi({
       query: (todo) => ({
         url: `/todos/${todo.id}`,
         method: "PUT",
-        body: todo, // Make sure to stringify the body if necessary
+        body: todo,
+      }),
+      invalidatesTags: ["Todos"],
+    }),
+    checkTodos: builder.mutation({
+      query: (todo) => ({
+        url: `/todos/${todo.id}`,
+        method: "PUT",
+        body: todo,
       }),
       invalidatesTags: ["Todos"],
     }),
@@ -46,4 +55,5 @@ export const {
   useAddTodosMutation,
   useDeleteTodosMutation,
   useEditTodosMutation,
+  useCheckTodosMutation,
 } = todosApi;

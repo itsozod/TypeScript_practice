@@ -1,6 +1,7 @@
 import styles from "./TodosContainer.module.css";
 import {
   Todo,
+  useCheckTodosMutation,
   useDeleteTodosMutation,
   useEditTodosMutation,
   useGetTodosQuery,
@@ -15,18 +16,14 @@ import { Button, Typography, Flex, Input } from "antd";
 import { CSSProperties, useState } from "react";
 
 export const TodosContainer = () => {
-  // const editedTodo = useTypedSelector((state) => state.todos.edit);
   const [editedTodo, setEditedTodo] = useState<string | null>(null);
   const [value, setValue] = useState<string>("");
-  // const value = useTypedSelector((state) => state.todos.value);
-  // const dispatch = useDispatch();
   const { Title } = Typography;
   // const todos = useTypedSelector(({ todos }) => todos.todos);
-  // console.log(todos);
   const [deleteTodo] = useDeleteTodosMutation();
   const [editTodos] = useEditTodosMutation();
+  const [checkTodo] = useCheckTodosMutation();
   const { data } = useGetTodosQuery();
-  console.log(data);
 
   const cardStyles: CSSProperties = {
     backgroundColor: "bisque",
@@ -36,7 +33,7 @@ export const TodosContainer = () => {
     margin: "10px",
     gap: "5px",
   };
-  const buttonContainer: CSSProperties = {
+  const buttonContainer: CSSProperties = {  
     gap: "5px",
   };
 
@@ -67,7 +64,15 @@ export const TodosContainer = () => {
                   onChange={(e) => setValue(e.target.value)}
                 ></Input>
               ) : (
-                <Title level={5} className={styles.todo_item}>
+                <Title
+                  style={{
+                    textDecoration: todo.done ? "line-through" : "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => checkTodo({ ...todo, done: !todo.done })}
+                  level={5}
+                  className={styles.todo_item}
+                >
                   {todo.title}
                 </Title>
               )}

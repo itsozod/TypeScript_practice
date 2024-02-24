@@ -1,0 +1,32 @@
+/* .full_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: auto;
+} */
+.cards_container::-webkit-scrollbar {
+  height: 6px;
+}
+.cards_container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+.cards_container::-webkit-scrollbar-track {
+  background-color: #faf7f7;
+}
+.cards_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  margin: 10px;
+  overflow-x: auto;
+  /* white-space: nowrap; */
+}
+.card {
+  border: 2px solid black;
+  min-width: 350px;
+  min-height: 300px;
+  padding: 10px;
+  margin: 10px;
+}
