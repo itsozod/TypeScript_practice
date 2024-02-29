@@ -26,8 +26,11 @@ export const Card = () => {
     setMouseDown(true);
     setStartX(e.pageX - cardRef.current.offsetLeft);
     setScrollLeft(cardRef.current.scrollLeft);
-    console.log("Down", startX);
-    console.log("Down", scrollLeft);
+    // console.log("Down", startX);
+    // console.log("Down", scrollLeft);
+    // console.log("Down", e.pageX);
+    // console.log("Down", e.pageX - cardRef.current.offsetLeft);
+    // console.log("Down", cardRef.current.offsetLeft);
   };
 
   const handleMouseUp = () => {
@@ -35,11 +38,12 @@ export const Card = () => {
   };
   const handleMouseMove = (e) => {
     if (!isMouseDown) return;
-    const x = e.pageX - cardRef.current.offsetLeft;
-    const walk = x - startX;
-    cardRef.current.scrollLeft = scrollLeft - walk;
+    const { offsetLeft } = cardRef.current;
+    const x = e.pageX - offsetLeft;
+    // const walk = x - startX;
+    cardRef.current.scrollLeft = scrollLeft - (x - startX);
   };
-
+// 
   return (
     <div
       className={styles.cards_container}
@@ -47,6 +51,9 @@ export const Card = () => {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={handleMouseMove}
+      // onWheel={(e) => {
+      //   cardRef.current.scrollLeft = e.deltaY;
+      // }}
     >
       <div className={styles.card}>Card</div>
       <div className={styles.card}>Card</div>
