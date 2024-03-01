@@ -8,35 +8,51 @@ export const Buttons = () => {
     {
       label: "15d",
       comission: 2,
+      duration: 15,
+      time: "дней",
     },
     {
       label: "1m",
       comission: 4,
+      duration: 1,
+      time: "месяц",
     },
     {
       label: "2m",
       comission: 6,
+      duration: 2,
+      time: "месяца",
     },
     {
       label: "3m",
       comission: 8,
+      duration: 3,
+      time: "месяца",
     },
     {
       label: "6m",
       comission: 13,
+      duration: 6,
+      time: "месяцев",
     },
     {
       label: "9m",
       comission: 18,
+      duration: 9,
+      time: "месяцев",
     },
 
     {
       label: "13m",
       comission: 23,
+      duration: 13,
+      time: "месяцев",
     },
     {
       label: "18m",
       comission: 34,
+      duration: 18,
+      time: "месяцев",
     },
   ];
   // const [btnOptions, setBtnOptions] = useState({
@@ -69,9 +85,11 @@ export const Buttons = () => {
     enableReinitialize: true,
     initialValues: {
       label: "15d",
-      comission: 2,
-      amount: 0,
+      comission: "2",
+      amount: "",
       value: "",
+      duration: "15",
+      time: "дней",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -80,20 +98,39 @@ export const Buttons = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    formik.setFieldValue("value", value);
-    const res = (Number(value) * formik.values.comission) / 100;
-    const perMonth = Number(value) + res;
-    formik.setFieldValue("amount", perMonth);
+    formik.handleChange({ target: { name: "value", value: value } });
+    // if (formik.values.duration === 15) {
+    //   const res = (Number(value) * formik.values.comission) / 100;
+    //   const perMonth = Number(value) + res;
+    //   formik.setFieldValue("amount", perMonth);
+    // } else {
+    const res = (Number(value) * Number(formik.values.comission)) / 100;
+    const perMonth = (Number(value) + res) / Number(formik.values.duration);
+    formik.setFieldValue("amount", Math.ceil(perMonth));
+    // }
   };
 
-  const handleClick = (label: string, comission: number) => {
+  const handleClick = (
+    label: string,
+    comission: number,
+    duration: number,
+    time: string
+  ) => {
     formik.handleChange({ target: { name: "label", value: label } });
     formik.handleChange({ target: { name: "comission", value: comission } });
+    formik.handleChange({ target: { name: "duration", value: duration } });
+    formik.handleChange({ target: { name: "time", value: time } });
 
+    // if (duration === 15) {
+    //   const res = (Number(formik.values.value) * comission) / 100;
+    //   const perMonth = Number(formik.values.value) + res;
+
+    //   formik.setFieldValue("amount", perMonth);
+    // } else {
     const res = (Number(formik.values.value) * comission) / 100;
-    const perMonth = Number(formik.values.value) + res;
-
-    formik.setFieldValue("amount", perMonth);
+    const perMonth = (Number(formik.values.value) + res) / duration;
+    formik.setFieldValue("amount", Math.ceil(perMonth));
+    // }
   };
   console.log("formik", formik.values);
 
@@ -105,7 +142,14 @@ export const Buttons = () => {
             return (
               <Button
                 key={option.label}
-                onClick={() => handleClick(option.label, option.comission)}
+                onClick={() =>
+                  handleClick(
+                    option.label,
+                    option.comission,
+                    option.duration,
+                    option.time
+                  )
+                }
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -126,6 +170,7 @@ export const Buttons = () => {
 
       <Input
         name="value"
+        // type="number"
         value={formik.values.value}
         onChange={handleChange}
         placeholder="Enter the value"
@@ -134,7 +179,9 @@ export const Buttons = () => {
       <Flex style={{ width: "100%", flexDirection: "column" }}>
         <Flex justify="space-around">
           <div>Duration</div>
-          <div>{formik.values.label}</div>
+          <div>
+            {formik.values.duration} {formik.values.time}
+          </div>
         </Flex>
         <Flex justify="space-around">
           <div>Comission</div>
