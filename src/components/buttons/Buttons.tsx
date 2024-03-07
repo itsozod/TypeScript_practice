@@ -1,4 +1,4 @@
-import { Button, Flex, Input } from "antd";
+import { Button, Flex, Form, Input } from "antd";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 // import { ChangeEvent, useState } from "react";
@@ -84,11 +84,11 @@ export const Buttons = () => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      label: "15d",
-      comission: "2",
+      label: "",
+      comission: "",
       amount: "",
       value: "",
-      duration: "15",
+      duration: "",
       time: "дней",
     },
     onSubmit: (values) => {
@@ -105,21 +105,22 @@ export const Buttons = () => {
     //   formik.setFieldValue("amount", perMonth);
     // } else {
     const res = (Number(value) * Number(formik.values.comission)) / 100;
-    const perMonth = (Number(value) + res) / Number(formik.values.duration);
+    const perMonth = Number(value) + res;
+    // / Number(formik.values.duration);
     formik.setFieldValue("amount", Math.ceil(perMonth));
     // }
   };
 
   const handleClick = (
     label: string,
-    comission: number,
-    duration: number,
-    time: string
+    comission: number
+    // duration: number,
+    // time: string
   ) => {
     formik.handleChange({ target: { name: "label", value: label } });
     formik.handleChange({ target: { name: "comission", value: comission } });
-    formik.handleChange({ target: { name: "duration", value: duration } });
-    formik.handleChange({ target: { name: "time", value: time } });
+    // formik.handleChange({ target: { name: "duration", value: duration } });
+    // formik.handleChange({ target: { name: "time", value: time } });
 
     // if (duration === 15) {
     //   const res = (Number(formik.values.value) * comission) / 100;
@@ -128,7 +129,8 @@ export const Buttons = () => {
     //   formik.setFieldValue("amount", perMonth);
     // } else {
     const res = (Number(formik.values.value) * comission) / 100;
-    const perMonth = (Number(formik.values.value) + res) / duration;
+    const perMonth = Number(formik.values.value) + res;
+    // / duration;
     formik.setFieldValue("amount", Math.ceil(perMonth));
     // }
   };
@@ -138,43 +140,50 @@ export const Buttons = () => {
     <>
       <Flex justify="center" align="center">
         <Flex style={{ width: "500px", margin: "10px" }}>
-          {options.map((option) => {
-            return (
-              <Button
-                key={option.label}
-                onClick={() =>
-                  handleClick(
-                    option.label,
-                    option.comission,
-                    option.duration,
-                    option.time
-                  )
-                }
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  padding: "30px",
-                  alignItems: "center",
-                  background:
-                    formik.values.label === option.label ? "green" : "white",
-                }}
-              >
-                <div>{option.label}</div>
-                <div>{option.comission}%</div>
-              </Button>
-            );
-          })}
+          <Form onFinish={formik.handleSubmit} layout="vertical">
+            {options.map((option) => {
+              return (
+                <Form.Item>
+                  <Button
+                    key={option.label}
+                    onClick={() =>
+                      handleClick(
+                        option.label,
+                        option.comission
+                        // option.duration,
+                        // option.time
+                      )
+                    }
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      padding: "30px",
+                      alignItems: "center",
+                      background:
+                        formik.values.label === option.label
+                          ? "green"
+                          : "white",
+                    }}
+                  >
+                    <div>{option.label}</div>
+                    <div>{option.comission}%</div>
+                  </Button>
+                </Form.Item>
+              );
+            })}
+            <Form.Item>
+              <Input
+                name="value"
+                // type="number"
+                value={formik.values.value}
+                onChange={handleChange}
+                placeholder="Enter the value"
+              />
+            </Form.Item>
+          </Form>
         </Flex>
       </Flex>
-
-      <Input
-        name="value"
-        // type="number"
-        value={formik.values.value}
-        onChange={handleChange}
-        placeholder="Enter the value"
-      />
 
       <Flex style={{ width: "100%", flexDirection: "column" }}>
         <Flex justify="space-around">
